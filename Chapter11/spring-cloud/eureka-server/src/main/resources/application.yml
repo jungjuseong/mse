@@ -2,8 +2,8 @@ server:
   port: 8761
 
 app:
-  eureka-username: u
-  eureka-password: p
+  eureka-username: user
+  eureka-password: passwd
 
 eureka:
   instance:

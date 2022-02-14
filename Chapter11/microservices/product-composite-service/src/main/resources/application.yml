@@ -81,8 +81,8 @@ server.error.include-message: always
 spring.application.name: product-composite
 
 app:
-  eureka-username: u
-  eureka-password: p
+  eureka-username: user
+  eureka-password: passwd
   eureka-server: localhost
   auth-server: localhost
 
@@ -124,6 +124,8 @@ spring.rabbitmq:
   password: guest
 
 spring.security.oauth2.resourceserver.jwt.issuer-uri: http://${app.auth-server}:9999
+#spring.security.oauth2.resourceserver.jwt.issuer-uri: https://dev-wemeetplace.us.auth0.com/
+
 
 logging:
   level:

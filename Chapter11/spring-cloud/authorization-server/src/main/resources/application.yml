@@ -4,8 +4,8 @@ server.forward-headers-strategy: framework
 spring.application.name: auth-server
 
 app:
-  eureka-username: u
-  eureka-password: p
+  eureka-username: user
+  eureka-password: passwd
   eureka-server: localhost
 
 eureka:

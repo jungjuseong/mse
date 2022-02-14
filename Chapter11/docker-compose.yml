@@ -46,7 +46,8 @@ services:
         condition: service_healthy
 
   mongodb:
-    image: mongo:4.4.2
+    image: mongo:5.0
+    platform: linux/arm64/v8
     mem_limit: 512m
     ports:
       - "27017:27017"
@@ -58,7 +59,8 @@ services:
       retries: 60
 
   mysql:
-    image: mysql:5.7.32
+    image: mysql:5.7
+    platform: linux/amd64
     mem_limit: 512m
     ports:
       - "3306:3306"
@@ -92,6 +94,10 @@ services:
   gateway:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_SSL_KEY_STORE=file:/keystore/edge-test.p12
+      - SERVER_SSL_KEY_STORE_PASSWORD=testtest
+    volumes:
+      - $PWD/keystore:/keystore
     build: spring-cloud/gateway
     mem_limit: 512m
     ports:

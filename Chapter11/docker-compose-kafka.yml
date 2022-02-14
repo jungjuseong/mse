@@ -91,7 +91,8 @@ services:
       retries: 60
 
   mysql:
-    image: mysql:5.7.32
+    image: mysql:5.7
+    platform: linux/amd64
     mem_limit: 512m
     ports:
       - "3306:3306"

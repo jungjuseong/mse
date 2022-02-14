@@ -37,7 +37,8 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
 
   mongodb:
-    image: mongo:4.4.2
+    image: mongo:5.0
+    platform: linux/arm64/v8
     mem_limit: 512m
     ports:
       - "27017:27017"
@@ -49,7 +50,9 @@ services:
       retries: 60
 
   mysql:
-    image: mysql:5.7.32
+    image: mysql:5.7
+    platform: linux/arm64/v8
+
     mem_limit: 512m
     ports:
       - "3306:3306"

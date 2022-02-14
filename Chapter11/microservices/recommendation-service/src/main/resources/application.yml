@@ -4,8 +4,8 @@ server.error.include-message: always
 spring.application.name: recommendation
 
 app:
-  eureka-username: u
-  eureka-password: p
+  eureka-username: user
+  eureka-password: passwd
   eureka-server: localhost
 
 eureka:

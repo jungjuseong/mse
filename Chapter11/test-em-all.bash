@@ -185,11 +185,26 @@ fi
 waitForService curl -k https://$HOST:$PORT/actuator/health
 
 ACCESS_TOKEN=$(curl -k https://writer:secret@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -s | jq .access_token -r)
+
+# ---------------
+#export TENANT=dev-wemeetplace.us.auth0.com
+#export WRITER_CLIENT_ID=0C2IJVeswSuspJA6fbwBh5YyCnzgzmLz
+#export WRITER_CLIENT_SECRET=VuDoeZ_0HMYqACznyqRoig2yqE2jvHWwEFXToK4HP7qnNx8L4VkHlqLqflrZsOlX
+#
+#ACCESS_TOKEN=$(curl -X POST https://$TENANT/oauth/token \
+#  -d grant_type=client_credentials \
+#  -d audience=https://localhost:8443/product-composite \
+#  -d scope=product:read+product:write \
+#  -d client_id=$WRITER_CLIENT_ID \
+#  -d client_secret=$WRITER_CLIENT_SECRET -s | jq -r .access_token)
+
+# ---------------
+
 echo ACCESS_TOKEN=$ACCESS_TOKEN
 AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
 
 # Verify access to Eureka and that all four microservices are registered in Eureka
-assertCurl 200 "curl -H "accept:application/json" -k https://u:p@$HOST:$PORT/eureka/api/apps -s"
+assertCurl 200 "curl -H "accept:application/json" -k https://user:passwd@$HOST:$PORT/eureka/api/apps -s"
 assertEqual 6 $(echo $RESPONSE | jq ".applications.application | length")
 
 setupTestdata
@@ -230,7 +245,20 @@ assertEqual "\"Type mismatch.\"" "$(echo $RESPONSE | jq .message)"
 assertCurl 401 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS -s"
 
 # Verify that the reader - client with only read scope can call the read API but not delete API.
+
 READER_ACCESS_TOKEN=$(curl -k https://reader:secret@$HOST:$PORT/oauth2/token -d grant_type=client_credentials -s | jq .access_token -r)
+# ------
+#export READER_CLIENT_ID=OorSAjMrLPlWWOQV4AWHEiYD1TpeKtZk
+#export READER_CLIENT_SECRET=dUbLg0ZZLefQPGce_u0PaNO5EjeWc9uyarscfFAYSd--2yTfrC_Tu3TmrnUgewHn
+#
+#READER_ACCESS_TOKEN=$(curl -X POST https://$TENANT/oauth/token \
+#  -d grant_type=client_credentials \
+#  -d audience=https://localhost:8443/product-composite \
+#  -d scope=product:read \
+#  -d client_id=$READER_CLIENT_ID \
+#  -d client_secret=$READER_CLIENT_SECRET -s | jq -r .access_token)
+#-----------
+
 echo READER_ACCESS_TOKEN=$READER_ACCESS_TOKEN
 READER_AUTH="-H \"Authorization: Bearer $READER_ACCESS_TOKEN\""
 
