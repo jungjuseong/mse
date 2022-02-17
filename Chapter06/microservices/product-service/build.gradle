@@ -35,10 +35,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 
-    // https://mvnrepository.com/artifact/net.java.dev.jna/jna
-    implementation group: 'net.java.dev.jna', name: 'jna', version: '4.5.0'
-
-    implementation platform('org.testcontainers:testcontainers-bom:1.15.2')
+    implementation platform('org.testcontainers:testcontainers-bom:1.16.2')
     testImplementation 'org.testcontainers:testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mongodb'
