@@ -37,7 +37,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
 
   mongodb:
-    image: mongo:4.4.12
+    image: mongo:latest
     platform: linux/amd64
     mem_limit: 512m
     ports:
