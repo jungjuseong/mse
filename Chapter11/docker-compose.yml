@@ -47,7 +47,7 @@ services:
 
   mongodb:
     image: mongo:5.0
-    platform: linux/arm64/v8
+    platform: linux/amd64
     mem_limit: 512m
     ports:
       - "27017:27017"
