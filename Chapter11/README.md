@@ -16,8 +16,8 @@ docker images -a | sed '1 d' | awk '{print $3}' | xargs -L1 docker rmi -f
 
 업데이트 및 HTTP 패키지 설치Permalink
 ```
-$ sudo apt update
-$ sudo apt-get install -y ca-certificates curl software-properties-common apt-transport-https gnupg lsb-release
+sudo apt update
+sudo apt-get install -y ca-certificates curl software-properties-common apt-transport-https gnupg lsb-release
 ```
 
 GPG 키 및 저장소 추가Permalink
@@ -32,6 +32,14 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io
 ```
+
+사용자 추가
+
+```
+sudo usermod -aG docker ${USER}
+```
+
+로그아웃 후 재 로그인
 
 
 ## docker remove
