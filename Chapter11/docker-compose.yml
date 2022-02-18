@@ -87,9 +87,9 @@ services:
       timeout: 2s
       retries: 60
 
-  eureka:
-    build: spring-cloud/eureka-server
-    mem_limit: 512m
+  # eureka:
+  #   build: spring-cloud/eureka-server
+  #   mem_limit: 512m
 
   gateway:
     environment:
