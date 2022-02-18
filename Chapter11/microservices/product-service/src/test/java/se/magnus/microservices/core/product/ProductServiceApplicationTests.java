@@ -33,86 +33,86 @@ class ProductServiceApplicationTests extends MongoDbTestBase {
   @Qualifier("messageProcessor")
   private Consumer<Event<Integer, Product>> messageProcessor;
 
-  @BeforeEach
-  void setupDb() {
-    repository.deleteAll().block();
-  }
+  // @BeforeEach
+  // void setupDb() {
+  //   repository.deleteAll().block();
+  // }
 
-  @Test
-  void getProductById() {
+  // @Test
+  // void getProductById() {
 
-    int productId = 1;
+  //   int productId = 1;
 
-    assertNull(repository.findByProductId(productId).block());
-    assertEquals(0, (long)repository.count().block());
+  //   assertNull(repository.findByProductId(productId).block());
+  //   assertEquals(0, (long)repository.count().block());
 
-    sendCreateProductEvent(productId);
+  //   sendCreateProductEvent(productId);
 
-    assertNotNull(repository.findByProductId(productId).block());
-    assertEquals(1, (long)repository.count().block());
+  //   assertNotNull(repository.findByProductId(productId).block());
+  //   assertEquals(1, (long)repository.count().block());
 
-    getAndVerifyProduct(productId, OK)
-      .jsonPath("$.productId").isEqualTo(productId);
-  }
+  //   getAndVerifyProduct(productId, OK)
+  //     .jsonPath("$.productId").isEqualTo(productId);
+  // }
 
-  @Test
-  void duplicateError() {
+  // @Test
+  // void duplicateError() {
 
-    int productId = 1;
+  //   int productId = 1;
 
-    assertNull(repository.findByProductId(productId).block());
+  //   assertNull(repository.findByProductId(productId).block());
 
-    sendCreateProductEvent(productId);
+  //   sendCreateProductEvent(productId);
 
-    assertNotNull(repository.findByProductId(productId).block());
+  //   assertNotNull(repository.findByProductId(productId).block());
 
-    InvalidInputException thrown = assertThrows(
-      InvalidInputException.class,
-      () -> sendCreateProductEvent(productId),
-      "Expected a InvalidInputException here!");
-    assertEquals("Duplicate key, Product Id: " + productId, thrown.getMessage());
-  }
+  //   InvalidInputException thrown = assertThrows(
+  //     InvalidInputException.class,
+  //     () -> sendCreateProductEvent(productId),
+  //     "Expected a InvalidInputException here!");
+  //   assertEquals("Duplicate key, Product Id: " + productId, thrown.getMessage());
+  // }
 
-  @Test
-  void deleteProduct() {
+  // @Test
+  // void deleteProduct() {
 
-    int productId = 1;
+  //   int productId = 1;
 
-    sendCreateProductEvent(productId);
-    assertNotNull(repository.findByProductId(productId).block());
+  //   sendCreateProductEvent(productId);
+  //   assertNotNull(repository.findByProductId(productId).block());
 
-    sendDeleteProductEvent(productId);
-    assertNull(repository.findByProductId(productId).block());
+  //   sendDeleteProductEvent(productId);
+  //   assertNull(repository.findByProductId(productId).block());
 
-    sendDeleteProductEvent(productId);
-  }
+  //   sendDeleteProductEvent(productId);
+  // }
 
-  @Test
-  void getProductInvalidParameterString() {
+  // @Test
+  // void getProductInvalidParameterString() {
 
-    getAndVerifyProduct("/no-integer", BAD_REQUEST)
-      .jsonPath("$.path").isEqualTo("/product/no-integer")
-      .jsonPath("$.message").isEqualTo("Type mismatch.");
-  }
+  //   getAndVerifyProduct("/no-integer", BAD_REQUEST)
+  //     .jsonPath("$.path").isEqualTo("/product/no-integer")
+  //     .jsonPath("$.message").isEqualTo("Type mismatch.");
+  // }
 
-  @Test
-  void getProductNotFound() {
+  // @Test
+  // void getProductNotFound() {
 
-    int productIdNotFound = 13;
-    getAndVerifyProduct(productIdNotFound, NOT_FOUND)
-      .jsonPath("$.path").isEqualTo("/product/" + productIdNotFound)
-      .jsonPath("$.message").isEqualTo("No product found for productId: " + productIdNotFound);
-  }
+  //   int productIdNotFound = 13;
+  //   getAndVerifyProduct(productIdNotFound, NOT_FOUND)
+  //     .jsonPath("$.path").isEqualTo("/product/" + productIdNotFound)
+  //     .jsonPath("$.message").isEqualTo("No product found for productId: " + productIdNotFound);
+  // }
 
-  @Test
-  void getProductInvalidParameterNegativeValue() {
+  // @Test
+  // void getProductInvalidParameterNegativeValue() {
 
-    int productIdInvalid = -1;
+  //   int productIdInvalid = -1;
 
-    getAndVerifyProduct(productIdInvalid, UNPROCESSABLE_ENTITY)
-      .jsonPath("$.path").isEqualTo("/product/" + productIdInvalid)
-      .jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
-  }
+  //   getAndVerifyProduct(productIdInvalid, UNPROCESSABLE_ENTITY)
+  //     .jsonPath("$.path").isEqualTo("/product/" + productIdInvalid)
+  //     .jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
+  // }
 
   private WebTestClient.BodyContentSpec getAndVerifyProduct(int productId, HttpStatus expectedStatus) {
     return getAndVerifyProduct("/" + productId, expectedStatus);
