@@ -1,49 +1,49 @@
 version: '2.1'
 
 services:
-  product:
-    build: microservices/product-service
-    mem_limit: 1024m
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+  # product:
+  #   build: microservices/product-service
+  #   mem_limit: 512m
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
 
-  recommendation:
-    build: microservices/recommendation-service
-    mem_limit: 512m
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+  # recommendation:
+  #   build: microservices/recommendation-service
+  #   mem_limit: 512m
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
 
-  review:
-    build: microservices/review-service
-    mem_limit: 512m
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      mysql:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
+  # review:
+  #   build: microservices/review-service
+  #   mem_limit: 512m
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   depends_on:
+  #     mysql:
+  #       condition: service_healthy
+  #     rabbitmq:
+  #       condition: service_healthy
 
-  product-composite:
-    build: microservices/product-composite-service
-    mem_limit: 512m
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-      auth-server:
-        condition: service_healthy
+  # product-composite:
+  #   build: microservices/product-composite-service
+  #   mem_limit: 512m
+  #   environment:
+  #     - SPRING_PROFILES_ACTIVE=docker
+  #   depends_on:
+  #     rabbitmq:
+  #       condition: service_healthy
+  #     auth-server:
+  #       condition: service_healthy
 
   mongodb:
     image: mongo:5.0

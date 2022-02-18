@@ -1,5 +1,63 @@
 # All
 
+## docker image 정리
+
+echo "remote volumn"
+docker volume rm $(docker volume ls -qf dangling=true)
+docker volume rm $(docker volume ls -q --filter dangling=true)
+
+# 이미지 제거
+echo "remote docker images"
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+docker images -a | sed '1 d' | awk '{print $3}' | xargs -L1 docker rmi -f
+
+
+## 도커 설치
+
+업데이트 및 HTTP 패키지 설치Permalink
+```
+$ sudo apt update
+$ sudo apt-get install -y ca-certificates curl software-properties-common apt-transport-https gnupg lsb-release
+```
+
+GPG 키 및 저장소 추가Permalink
+
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+```
+
+도커 엔진 설치
+```
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io
+```
+
+
+## docker remove
+
+dpkg -l | grep -i docker
+ 
+
+패키지 삭제
+
+```
+sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
+sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce
+```
+
+남은 파일들 삭제
+
+```
+sudo rm -rf /var/lib/docker /etc/docker
+sudo rm /etc/apparmor.d/docker
+sudo groupdel docker
+sudo rm -rf /var/run/docker.sock
+sudo rm -rf /usr/local/bin/docker-compose
+sudo rm -rf /etc/docker
+sudo rm -rf ~/.docker
+```
+
 ### 자동 테스트를 빌드하고 실행
 
 To build and run automated tests, we perform the following steps:
