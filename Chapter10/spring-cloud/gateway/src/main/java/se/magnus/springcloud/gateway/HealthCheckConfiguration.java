@@ -26,7 +26,7 @@ public class HealthCheckConfiguration {
   }
 
   @Bean
-  ReactiveHealthContributor healthcheckMicroservices() {
+  ReactiveHealthContributor healthCheckMicroservices() {
 
     final Map<String, ReactiveHealthIndicator> registry = new LinkedHashMap<>();
 

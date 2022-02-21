@@ -16,6 +16,11 @@ eureka:
 
 spring.cloud.gateway.routes:
 
+- id: roouty
+  uri: lb://roouty
+  predicates:
+    - Path=/roouty/**
+
 - id: product-composite
   uri: lb://product-composite
   predicates:
