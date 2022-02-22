@@ -53,5 +53,5 @@ dependencyManagement {
 
 test {
     useJUnitPlatform()
-    exclude '**/*'
+    //exclude '**/*'
 }
